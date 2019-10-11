@@ -1,21 +1,20 @@
 var express = require('express');
+// var bodyParser = require('body-parser')
 var app = express();
-var birds = require('./birds');
 
-var users = require('./users');
-var jwt = require('jsonwebtoken');
-var jwtSecret = '123';
+global.appRoot = __dirname;
+
+var auth = require('./routes/auth');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use(express.static(__dirname + '/public'));
-app.use('/birds', birds);
+app.use(express.json());
 
+app.use('/auth', auth);
 app.get('/', function (req, res) {
-    res.render('view', {
-        name: 'yooon'
-    });
+    res.render('index', { name: 'yooon' });
 });
 
 app.listen(3000, function () {
